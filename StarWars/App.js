@@ -1,11 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from 
-  "@react-navigation/native";
-import { createDrawerNavigator } from 
-  "@react-navigation/drawer";
-import { createBottomTabNavigator } from 
-  "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Platform } from "react-native";
 import Films from "./Films";
 import Planets from "./Planets";
