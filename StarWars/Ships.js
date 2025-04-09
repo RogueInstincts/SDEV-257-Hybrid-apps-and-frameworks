@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, TextInput, Modal, Pressable } from "react-native";
 import styles from "./styles";
+import Search from "./Search";
 
 export default function Ships({ navigation }) {
   const [data, setData] = useState([]);
@@ -44,7 +45,8 @@ export default function Ships({ navigation }) {
   
     return (
       <View style={styles.container}>
-        <FlatList
+          <Search />
+          <FlatList
           data={data}
           keyExtractor={({ uid }) => uid}
           renderItem={({ item }) => (
@@ -60,7 +62,7 @@ export default function Ships({ navigation }) {
               <Text style={styles.text}>Max speed in atmosphere: {item.properties.max_atmosphering_speed} km/h</Text>
               <Text style={styles.text}>Hyperdrive rating: {item.properties.hyperdrive_rating}</Text>
               <Text style={styles.text}>MGLT per hour: {item.properties.MGLT}</Text>
-              <Text style={styles.text}>cargo capacity: {item.properties.cargo_capacity} kg</Text>
+              <Text style={styles.text}>Cargo capacity: {item.properties.cargo_capacity} kg</Text>
               <Text style={styles.text}>Max time without resupply: {item.properties.consumables}</Text>
             </View>
           )}

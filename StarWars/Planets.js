@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import styles from "./styles";
+import Search from "./Search";
 
 export default function Planets({ navigation }) {
   const [data, setData] = useState([]);
@@ -44,6 +45,7 @@ export default function Planets({ navigation }) {
   
     return (
       <View style={styles.container}>
+        <Search />
         <FlatList
           data={data}
           keyExtractor={({ uid }) => uid}
