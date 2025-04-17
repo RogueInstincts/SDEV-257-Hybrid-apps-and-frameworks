@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, TextInput, Modal, Pressable, ScrollView, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import Search from "./Search";
 
@@ -7,6 +7,24 @@ export default function Planets({ navigation }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [modalText, setModalText] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  function onScroll(e, item) {
+        if (e.nativeEvent.contentOffset.x > 250) {
+            setModalText(item.properties.name);
+            setData(data.filter((dataItem) => dataItem !== item));
+            setModalVisible(true);
+        }
+    }
+
+  const scrollProps = {
+    horizontal: true,
+    pagingEnabled: true,
+    showsHorizontalScrollIndicator: false,
+    scrollEventThrottle: 10,
+    onScroll,
+  };
   
     useEffect(() => {
       const fetchData = async () => {
@@ -45,24 +63,47 @@ export default function Planets({ navigation }) {
   
     return (
       <View style={styles.container}>
+        <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText} >{modalText}</Text>
+            <Pressable
+            style={styles.modalButton}
+            onPress={() => setModalVisible(!modalVisible)}>
+            <Text style={styles.text}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+        </Modal>
         <Search />
         <FlatList
-          data={data}
-          keyExtractor={({ uid }) => uid}
-          renderItem={({ item }) => (
-            <View style={styles.item}>
-              <Text style={styles.name}>{item.properties.name}</Text>
-              <Text style={styles.text}>Population: {item.properties.population}</Text>
-              <Text style={styles.text}>Climate: {item.properties.climate}</Text>
-              <Text style={styles.text}>Terrain: {item.properties.terrain}</Text>
-              <Text style={styles.text}>Surface water percentage: {item.properties.surface_water}</Text>
-              <Text style={styles.text}>Diameter: {item.properties.diameter}</Text>
-              <Text style={styles.text}>Rotation period: {item.properties.rotation_period} standard hours</Text>
-              <Text style={styles.text}>Orbital period: {item.properties.orbital_period} standard days</Text>
-              <Text style={styles.text}>Gravity: {item.properties.gravity}</Text>
-            </View>
+        data={data}
+        keyExtractor={({ uid }) => uid}
+        renderItem={({ item }) => (
+          <ScrollView {...scrollProps} onScroll={(e) => onScroll(e, item)}>
+          <TouchableOpacity>
+          <View style={styles.item}>
+            <Text style={styles.name}>{item.properties.name}</Text>
+            <Text style={styles.text}>Population: {item.properties.population}</Text>
+            <Text style={styles.text}>Climate: {item.properties.climate}</Text>
+            <Text style={styles.text}>Terrain: {item.properties.terrain}</Text>
+            <Text style={styles.text}>Surface water percentage: {item.properties.surface_water}</Text>
+            <Text style={styles.text}>Diameter: {item.properties.diameter}</Text>
+            <Text style={styles.text}>Rotation period: {item.properties.rotation_period} standard hours</Text>
+            <Text style={styles.text}>Orbital period: {item.properties.orbital_period} standard days</Text>
+            <Text style={styles.text}>Gravity: {item.properties.gravity}</Text>
+          </View>
+          </TouchableOpacity>
+          <View style={styles.blank} />
+          </ScrollView>
           )}
-        />
+          />
       </View>
     );
   }

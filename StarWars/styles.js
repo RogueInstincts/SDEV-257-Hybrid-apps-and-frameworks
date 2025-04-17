@@ -3,14 +3,16 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "space_between",
+    alignItems: "center",
     justifyContent: "space_between",
     padding: 20,
     paddingBottom: 0,
   },
   item: {
+    width: 330,
     padding: 10,
     margin: 10,
+    marginLeft: 20,
     borderWidth: 1,
     borderColor: '#aaa',
     backgroundColor: "lightblue",
@@ -30,6 +32,7 @@ export default StyleSheet.create({
     backgroundColor: "white",
     fontSize: 15,
     height: 50,
+    width: 350,
     borderColor: "#555",
     borderWidth: 1,
     borderRadius: 5,
@@ -57,6 +60,8 @@ export default StyleSheet.create({
     elevation: 5,
   },
   modalText: {
+    fontSize: 18,
+    fontWeight: "bold",
     marginBottom: 15,
     textAlign: 'center',
   },
@@ -64,5 +69,8 @@ export default StyleSheet.create({
     backgroundColor: "lightblue",
     borderRadius: 20,
     padding: 10,
+  },
+  blank: {
+    width: 400,
   },
 });
