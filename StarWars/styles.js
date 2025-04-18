@@ -5,14 +5,13 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space_between",
-    padding: 20,
-    paddingBottom: 0,
+    padding: 0,
   },
   item: {
     width: 330,
     padding: 10,
     margin: 10,
-    marginLeft: 20,
+    marginLeft: 40,
     borderWidth: 1,
     borderColor: '#aaa',
     backgroundColor: "lightblue",
@@ -72,5 +71,15 @@ export default StyleSheet.create({
   },
   blank: {
     width: 400,
+  },
+  placeholderImage: {
+    width: 295,
+    height: 187,
+    margin: 10,
+  },
+  remoteImage: {
+    width: 295,
+    height: 187,
+    margin: 10,
   },
 });

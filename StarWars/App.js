@@ -18,15 +18,15 @@ export default function App() {
           <Tab.Screen name="Films" component={Films} />
           <Tab.Screen name="Planets" component={Planets} />
           <Tab.Screen name="Ships" component={Ships} />
-          </Tab.Navigator>
-        )}
-        {Platform.OS == "android" && (
-          <Drawer.Navigator>
-            <Drawer.Screen name="Films" component={Films} />
-            <Drawer.Screen name="Planets" component={Planets} />
-            <Drawer.Screen name="Ships" component={Ships} />
-            </Drawer.Navigator>
-          )}
-          </NavigationContainer>
-          );
+        </Tab.Navigator>
+      )}
+      {Platform.OS == "android" && (
+        <Drawer.Navigator>
+          <Drawer.Screen name="Films" component={Films} />
+          <Drawer.Screen name="Planets" component={Planets} />
+          <Drawer.Screen name="Ships" component={Ships} />
+        </Drawer.Navigator>
+      )}
+    </NavigationContainer>
+  );
 }

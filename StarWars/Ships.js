@@ -3,6 +3,7 @@ import { View, Text, FlatList, ActivityIndicator, Modal, Pressable, ScrollView, 
 import styles from "./styles";
 import Search from "./Search";
 import Animated, { SlideInDown } from "react-native-reanimated";
+import LoadImage from "./LoadImage";
 
 export default function Ships({ navigation }) {
   const [data, setData] = useState([]);
@@ -64,6 +65,7 @@ export default function Ships({ navigation }) {
   
   return (
     <View style={styles.container}>
+    <LoadImage/>
     <Modal
           animationType="slide"
           transparent={true}

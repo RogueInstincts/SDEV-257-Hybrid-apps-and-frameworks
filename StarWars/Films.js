@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, ActivityIndicator, TextInput, Modal, Pressable, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, TextInput, Modal, Pressable, ScrollView, TouchableOpacity, Image } from "react-native";
+import Animated, { SlideInDown } from "react-native-reanimated";
 import styles from "./styles";
 import Search from "./Search";
-import Animated, { SlideInDown } from "react-native-reanimated";
+import LoadImage from "./LoadImage";
 
 export default function Films() {
   const [data, setData] = useState([]);
@@ -64,6 +65,7 @@ export default function Films() {
 
     return (
       <View style={styles.container}>
+        <LoadImage />
           <Modal
                 animationType="slide"
                 transparent={true}
