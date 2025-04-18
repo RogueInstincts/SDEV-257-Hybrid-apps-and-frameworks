@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, ActivityIndicator, TextInput, Modal, Pressable, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, ActivityIndicator, Modal, Pressable, ScrollView, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import Search from "./Search";
+import Animated, { SlideInDown } from "react-native-reanimated";
 
 export default function Planets({ navigation }) {
   const [data, setData] = useState([]);
@@ -86,6 +87,7 @@ export default function Planets({ navigation }) {
         data={data}
         keyExtractor={({ uid }) => uid}
         renderItem={({ item }) => (
+          <Animated.View entering={SlideInDown.duration(600).delay(100)}>
           <ScrollView {...scrollProps} onScroll={(e) => onScroll(e, item)}>
           <TouchableOpacity>
           <View style={styles.item}>
@@ -102,6 +104,7 @@ export default function Planets({ navigation }) {
           </TouchableOpacity>
           <View style={styles.blank} />
           </ScrollView>
+          </Animated.View>
           )}
           />
       </View>

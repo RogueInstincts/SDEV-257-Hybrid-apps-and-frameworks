@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, ActivityIndicator, TextInput, Modal, Pressable } from "react-native";
 import styles from "./styles";
+import Animated, { SlideInUp } from "react-native-reanimated";
 
 const Search = () => {
     const [searchText, setSearchText] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
-        <View>
+        <Animated.View entering={SlideInUp.duration(500)}>
             <TextInput 
             style={styles.textInput} 
             placeholder="Search" 
@@ -36,7 +37,7 @@ const Search = () => {
                     </View>
                 </View>
             </Modal>
-        </View>
+        </Animated.View>
     )
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, ActivityIndicator, TextInput, Modal, Pressable, ScrollView, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import Search from "./Search";
+import Animated, { SlideInDown } from "react-native-reanimated";
 
 export default function Films() {
   const [data, setData] = useState([]);
@@ -86,6 +87,7 @@ export default function Films() {
               data={data}
               keyExtractor={({ uid }) => uid}
               renderItem={({ item }) => (
+                <Animated.View entering={SlideInDown.duration(500).delay(100)}>
                 <ScrollView {...scrollProps} onScroll={(e) => onScroll(e, item)}>
                 <TouchableOpacity>
                 <View style={styles.item}>
@@ -99,6 +101,7 @@ export default function Films() {
                 </TouchableOpacity>
                 <View style={styles.blank} />
                 </ScrollView>
+                </Animated.View>
               )}
             />
           </View>
