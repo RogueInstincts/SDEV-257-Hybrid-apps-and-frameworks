@@ -1,22 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, Component } from "react";
 import { View, Text, FlatList, ActivityIndicator, TextInput, Modal, Pressable, ScrollView, TouchableOpacity, Image } from "react-native";
 import Animated, { SlideInDown } from "react-native-reanimated";
 import styles from "./styles";
 import Search from "./Search";
 import LoadImage from "./LoadImage";
 
-export default function Films() {
+export default function Films({navigation}) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalText, setModalText] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const scrollViewRefs = useRef({});
+  
+  const [showDetails, setShowDetails] = useState(false);
 
   function onScroll(e, item) {
-        if (e.nativeEvent.contentOffset.x > 250) {
+        if (e.nativeEvent.contentOffset.x > 350) {
+          /*
             setModalText(item.properties.title);
-            setData(data.filter((dataItem) => dataItem !== item));
             setModalVisible(true);
+            
+            setShowDetails(true);
+          */
+            navigation.navigate("Details", {item: item});
+            scrollViewRefs.current[item.uid]?.scrollTo({ x: 0, y: 0, animated: true });
+            
         }
     }
 
@@ -90,15 +99,10 @@ export default function Films() {
               keyExtractor={({ uid }) => uid}
               renderItem={({ item }) => (
                 <Animated.View entering={SlideInDown.duration(500).delay(100)}>
-                <ScrollView {...scrollProps} onScroll={(e) => onScroll(e, item)}>
+                <ScrollView ref={(ref) => { scrollViewRefs.current[item.uid] = ref; }} {...scrollProps} onScroll={(e) => onScroll(e, item)}>
                 <TouchableOpacity>
                 <View style={styles.item}>
                   <Text style={styles.name}>{item.properties.title}</Text>
-                  <Text style={styles.text}>Episode {item.properties.episode_id}</Text>
-                  <Text style={styles.text}>Directed by {item.properties.director}</Text>
-                  <Text style={styles.text}>Producer(s): {item.properties.producer}</Text>
-                  <Text style={styles.text}>Release date: {item.properties.release_date}</Text>
-                  <Text style={styles.text}>Opening crawl: {"\n" + item.properties.opening_crawl}</Text>
                 </View> 
                 </TouchableOpacity>
                 <View style={styles.blank} />
