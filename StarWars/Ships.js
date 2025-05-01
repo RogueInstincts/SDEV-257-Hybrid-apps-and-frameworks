@@ -7,10 +7,15 @@ import LoadImage from "./LoadImage";
 
 export default function Ships({ navigation }) {
   const [data, setData] = useState([]);
+  const [fullData, setFullData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalText, setModalText] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const handleSearch = (searchData) => {
+    setData(searchData);
+  };
 
   function onScroll(e, item) {
         if (e.nativeEvent.contentOffset.x > 250) {
@@ -36,6 +41,7 @@ export default function Ships({ navigation }) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const json = await response.json();
+          setFullData(json.results);
           setData(json.results);
         } catch (e) {
           setError(e);
@@ -84,13 +90,13 @@ export default function Ships({ navigation }) {
                   </View>
               </View>
           </Modal>
-        <Search />
+        <Search fullData={fullData} onSearch={handleSearch}  searchMode={"name"} />
         <FlatList
         data={data}
         keyExtractor={({ uid }) => uid}
         renderItem={({ item }) => (
           <Animated.View entering={SlideInDown.duration(600).delay(100)}>
-          <ScrollView {...scrollProps} onScroll={(e) => onScroll(e, item)}>
+          <ScrollView style={styles.scrollView} {...scrollProps} onScroll={(e) => onScroll(e, item)}>
           <TouchableOpacity>
           <View style={styles.item}>
             <Text style={styles.name}>{item.properties.name}</Text>

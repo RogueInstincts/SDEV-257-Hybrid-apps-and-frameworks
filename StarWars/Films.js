@@ -7,6 +7,7 @@ import LoadImage from "./LoadImage";
 
 export default function Films({navigation}) {
   const [data, setData] = useState([]);
+  const [fullData, setFullData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modalText, setModalText] = useState(null);
@@ -15,14 +16,12 @@ export default function Films({navigation}) {
   
   const [showDetails, setShowDetails] = useState(false);
 
+  const handleSearch = (searchData) => {
+    setData(searchData);
+  };
+
   function onScroll(e, item) {
         if (e.nativeEvent.contentOffset.x > 350) {
-          /*
-            setModalText(item.properties.title);
-            setModalVisible(true);
-            
-            setShowDetails(true);
-          */
             navigation.navigate("Details", {item: item});
             scrollViewRefs.current[item.uid]?.scrollTo({ x: 0, y: 0, animated: true });
             
@@ -45,6 +44,7 @@ export default function Films({navigation}) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           const json = await response.json();
+          setFullData(json.result);
           setData(json.result);
         } catch (e) {
           setError(e);
@@ -93,13 +93,13 @@ export default function Films({navigation}) {
                         </View>
                     </View>
                 </Modal>
-              <Search />
+              <Search fullData={fullData} onSearch={handleSearch} searchMode={"title"} />
               <FlatList
               data={data}
               keyExtractor={({ uid }) => uid}
               renderItem={({ item }) => (
                 <Animated.View entering={SlideInDown.duration(500).delay(100)}>
-                <ScrollView ref={(ref) => { scrollViewRefs.current[item.uid] = ref; }} {...scrollProps} onScroll={(e) => onScroll(e, item)}>
+                <ScrollView style={styles.scrollView} ref={(ref) => { scrollViewRefs.current[item.uid] = ref; }} {...scrollProps} onScroll={(e) => onScroll(e, item)}>
                 <TouchableOpacity>
                 <View style={styles.item}>
                   <Text style={styles.name}>{item.properties.title}</Text>

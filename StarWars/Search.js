@@ -3,9 +3,16 @@ import { View, Text, FlatList, ActivityIndicator, TextInput, Modal, Pressable } 
 import styles from "./styles";
 import Animated, { SlideInUp } from "react-native-reanimated";
 
-const Search = () => {
-    const [searchText, setSearchText] = useState(null);
-    const [modalVisible, setModalVisible] = useState(false);
+const Search = ({fullData, onSearch, searchMode}) => {
+    const handleSubmitText = (e) => {
+      if (searchMode == "name") {
+        onSearch(fullData.filter((i) =>
+  i.properties.name.toLowerCase().includes(e.nativeEvent.text.toLowerCase()) || e.nativeEvent.text.length === 0));
+      } else if (searchMode == "title") {
+        onSearch(fullData.filter((i) =>
+  i.properties.title.toLowerCase().includes(e.nativeEvent.text.toLowerCase()) || e.nativeEvent.text.length === 0));
+      }
+    };
 
     return (
         <Animated.View entering={SlideInUp.duration(500)}>
@@ -13,30 +20,8 @@ const Search = () => {
             style={styles.textInput} 
             placeholder="Search" 
             returnKeyType="search"
-            onSubmitEditing={(e) => {
-                setSearchText(e.nativeEvent.text)
-                setModalVisible(!modalVisible)
-            }}
+            onSubmitEditing={ handleSubmitText }
             />
-            
-            <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-                setModalVisible(!modalVisible);
-            }}>
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text style={styles.modalText} >{searchText}</Text>
-                        <Pressable
-                        style={styles.modalButton}
-                        onPress={() => setModalVisible(!modalVisible)}>
-                            <Text style={styles.text}>Hide Modal</Text>
-                        </Pressable>
-                    </View>
-                </View>
-            </Modal>
         </Animated.View>
     )
 }

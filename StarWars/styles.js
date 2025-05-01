@@ -11,7 +11,6 @@ export default StyleSheet.create({
     width: 330,
     padding: 10,
     margin: 10,
-    marginLeft: 40,
     borderWidth: 1,
     borderColor: '#aaa',
     backgroundColor: "lightblue",
@@ -81,5 +80,8 @@ export default StyleSheet.create({
     width: 295,
     height: 187,
     margin: 10,
+  },
+  scrollView: {
+    marginLeft: 30,
   },
 });
